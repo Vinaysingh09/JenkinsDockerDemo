@@ -21,7 +21,7 @@ pipeline {
                     services.each { service ->
                         dir(service) {
                             echo "📦 Building ${service}"
-                            sh 'mvn clean package -DskipTests'
+                            bat 'mvn clean package -DskipTests'
                         }
                     }
                 }
@@ -51,8 +51,8 @@ pipeline {
         stage('Deploy Locally with Docker Compose') {
             steps {
                 echo "🚀 Deploying services using docker-compose"
-                sh 'docker-compose down || true'
-                sh 'docker-compose up -d --build'
+                bat 'docker-compose down || true'
+                bat 'docker-compose up -d --build'
             }
         }
     }
