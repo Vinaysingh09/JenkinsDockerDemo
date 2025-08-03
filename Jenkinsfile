@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = 'docker-hub-credentials-id'
+        DOCKER_HUB_CREDENTIALS = 'docker-hub-credentials-id' // replace with your Jenkins credential ID
         DOCKER_HUB_USERNAME = 'vinay020'
     }
 
@@ -16,7 +16,7 @@ pipeline {
         stage('Build & Package All Services') {
             steps {
                 script {
-                    def services = ['ServicePayment', 'ServiceUser','ServicesOrder'] // Add other services here
+                    def services = ['ServicePayment', 'ServiceUser', 'ServicesOrder']
 
                     services.each { service ->
                         dir(service) {
@@ -31,7 +31,8 @@ pipeline {
         stage('Build & Push Docker Images') {
             steps {
                 script {
-                    def services = ['ServicePayment', 'ServiceUser','ServicesOrder']
+                    def services = ['ServicePayment', 'ServiceUser', 'ServicesOrder']
+
                     services.each { service ->
                         def image = "${DOCKER_HUB_USERNAME}/${service.toLowerCase()}:latest"
                         dir(service) {
@@ -48,14 +49,13 @@ pipeline {
             }
         }
 
-        stage('Deploy Locally with Docker Compose') {
+        stage('Deploy with Docker Compose') {
             steps {
                 echo "🚀 Deploying services using docker-compose"
                 bat '''
                     docker-compose down
-                    exit /b 0
+                    docker-compose up -d --build
                 '''
-                bat 'docker-compose up -d --build'
             }
         }
     }

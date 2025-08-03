@@ -7,15 +7,30 @@ services:
     ports:
       - "3306:3306"
     environment:
-        MYSQL_DATABASE: jenkin
-        MYSQL_ROOT_PASSWORD: vinay
+      MYSQL_DATABASE: jenkin
+      MYSQL_ROOT_PASSWORD: vinay
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "mysql"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 30s
       timeout: 10s
       retries: 5
     networks:
-       - springboot-network
+      - springboot-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - "8084:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: vinay
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - springboot-network
+
   payment-service:
     build:
       context: ./ServicePayment
