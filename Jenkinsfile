@@ -16,7 +16,7 @@ pipeline {
         stage('Build & Package All Services') {
             steps {
                 script {
-                    def services = ['ServicePayment', 'ServiceUser','ServiceOrder'] // Add other services here
+                    def services = ['ServicePayment', 'ServiceUser','ServicesOrder'] // Add other services here
 
                     services.each { service ->
                         dir(service) {
@@ -31,7 +31,7 @@ pipeline {
         stage('Build & Push Docker Images') {
             steps {
                 script {
-                    def services = ['ServicePayment', 'ServiceUser','ServiceOrder']
+                    def services = ['ServicePayment', 'ServiceUser','ServicesOrder']
                     services.each { service ->
                         def image = "${DOCKER_HUB_USERNAME}/${service.toLowerCase()}:latest"
                         dir(service) {
