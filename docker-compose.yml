@@ -7,10 +7,15 @@ services:
     ports:
       - "3306:3306"
     environment:
-        MYSQL_DATABASE: root
+        MYSQL_DATABASE: jenkin
         MYSQL_ROOT_PASSWORD: vinay
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "mysql"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     networks:
-        springboot-network
+       - springboot-network
   payment-service:
     build:
       context: ./ServicePayment
@@ -28,6 +33,9 @@ services:
     container_name: user-service
     ports:
       - "8082:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
     networks:
       - springboot-network
 

@@ -51,7 +51,10 @@ pipeline {
         stage('Deploy Locally with Docker Compose') {
             steps {
                 echo "🚀 Deploying services using docker-compose"
-                bat 'docker-compose down || true'
+                bat '''
+                    docker-compose down
+                    exit /b 0
+                '''
                 bat 'docker-compose up -d --build'
             }
         }
