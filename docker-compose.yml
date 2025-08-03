@@ -24,7 +24,7 @@ services:
    # Add order-service microservices below
    order-service:
 	  build:
-	    context: ./ServiceOrder
+	    context: ./ServicesOrder
 	    dockerfile: Dockerfile
 	  container_name: order-service
 	  ports:
