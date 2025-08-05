@@ -22,6 +22,8 @@ public class PaymentService implements IPaymentService {
 		pay.setQuantity(req.getQuantity());
 		pay.setUserId(req.getUserId());
 		paymentRepository.save(pay);
+		req.setMsg("Success");
+		req.setStatus(200);
 		return req;
 	}
 

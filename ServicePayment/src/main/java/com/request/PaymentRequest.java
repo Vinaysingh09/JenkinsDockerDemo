@@ -1,6 +1,8 @@
 package com.request;
 
-public class PaymentRequest {
+import com.response.CommonResponse;
+
+public class PaymentRequest extends CommonResponse {
 	private Long userId;
 	private String email;
 	private Double amount;
