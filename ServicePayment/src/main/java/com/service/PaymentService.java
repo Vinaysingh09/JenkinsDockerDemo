@@ -1,9 +1,11 @@
 package com.service;
 
+import org.springframework.stereotype.Service;
+
 import com.model.PaymentModel;
 import com.repository.PaymentRepository;
 import com.request.PaymentRequest;
-
+@Service
 public class PaymentService implements IPaymentService {
 	private final PaymentRepository paymentRepository;
 
