@@ -2,6 +2,7 @@ package com.services;
 
 import java.util.List;
 
+import com.common.model.OrderReceivedRequest;
 import com.model.UserDataModel;
 
 public interface IUserDataService {
@@ -13,5 +14,7 @@ public interface IUserDataService {
 	public UserDataModel updateUserData(Long id,UserDataModel users);
 
 	public int deleteUser(Long id);
+	
+	public OrderReceivedRequest checkUserAndProcessPayment(OrderReceivedRequest req);
 
 }

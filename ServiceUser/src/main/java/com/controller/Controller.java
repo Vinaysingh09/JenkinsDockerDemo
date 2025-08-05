@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.common.model.OrderReceivedRequest;
 import com.model.UserDataModel;
 import com.services.IUserDataService;
 
@@ -68,6 +69,12 @@ public class Controller {
 			return ResponseEntity.status(204).body("Deleted");
 		else
 			return ResponseEntity.notFound().build();
+
+	}
+	@PostMapping(value = "/payment")
+	public ResponseEntity<OrderReceivedRequest> processPayment(@RequestBody OrderReceivedRequest request) {	
+		// Return 200 OK with user list
+		return ResponseEntity.status(201).body(iUserDataService.checkUserAndProcessPayment(request));
 
 	}
 }

@@ -1,18 +1,22 @@
 package com.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.common.model.OrderReceivedRequest;
 import com.model.UserDataModel;
 import com.repository.UserRepository;
 @Service
 public class UserDataService implements IUserDataService {
 	private final UserRepository userRepository;
+	private final IUserPayment userPayment;
 
-	public UserDataService(UserRepository userRepository) {
+	public UserDataService(UserRepository userRepository, IUserPayment userPayment) {
 		super();
 		this.userRepository = userRepository;
+		this.userPayment = userPayment;
 	}
 
 	@Override
@@ -65,6 +69,15 @@ public class UserDataService implements IUserDataService {
 			userRepository.deleteById(id);
 			return 204;
 		}).orElse(404);
+	}
+
+	@Override
+	public OrderReceivedRequest checkUserAndProcessPayment(OrderReceivedRequest req) {
+		// TODO Auto-generated method stub
+		 return userRepository.findById(req.getUserId()).map(e->{
+			 OrderReceivedRequest processPayment = userPayment.processPayment(req);
+			 return processPayment;
+		 }).orElseThrow();
 	}
 
 }
