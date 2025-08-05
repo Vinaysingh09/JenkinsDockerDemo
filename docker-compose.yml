@@ -36,6 +36,9 @@ services:
     container_name: payment-service
     ports:
       - "8081:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
     networks:
       - springboot-network
 
